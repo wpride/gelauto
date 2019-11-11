@@ -1,5 +1,6 @@
 require 'gelauto/rspec'
 require 'pry-byebug'
+require 'gelauto/method_index'
 
 require_relative './image.rb'
 Gelauto.paths << File.join(__dir__, 'image.rb')
