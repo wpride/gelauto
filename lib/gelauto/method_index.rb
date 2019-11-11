@@ -1,3 +1,4 @@
+require 'pry-byebug'
 module Gelauto
   class MethodIndex
     attr_reader :index
@@ -73,8 +74,10 @@ module Gelauto
           md = mds[lineno]
 
           if md.is_a?(MethodDef)
-            indent = line[0...line.index(/[^\s]/)]
-            annotated << "#{indent}#{md.to_sig}"
+            unless lines[idx-1].include?('sig')
+              indent = line[0...line.index(/[^\s]/)]
+              annotated << "#{indent}#{md.to_sig}"
+            end
           end
 
           annotated << line

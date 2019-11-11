@@ -15,7 +15,7 @@ module Gelauto
 
     def method_groups
       @method_groups ||= { methods: [], children: {} }.tap do |groups|
-        Utils.each_absolute_path(paths) do |path|
+        Utils.each_absolute_path(paths).each do |path|
           method_index.each_method_in(path) do |_lineno, md|
             cur_group = md.nesting.inject(groups) do |group, namespace|
               group[:children][[namespace.name, namespace.type]] ||= { methods: [], children: {} }

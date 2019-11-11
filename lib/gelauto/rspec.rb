@@ -10,7 +10,7 @@ RSpec.configure do |config|
     Gelauto.teardown
 
     if ENV['GELAUTO_ANNOTATE'] == 'true'
-      Gelauto.each_absolute_path do |path|
+      Gelauto.each_absolute_path.each do |path|
         Gelauto.annotate_file(path)
         Gelauto::Logger.info("Annotated #{path}")
       end

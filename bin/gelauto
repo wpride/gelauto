@@ -54,7 +54,7 @@ module Gelauto
           $:.replace(old_path)
 
           if options[:annotate]
-            Gelauto.each_absolute_path do |path|
+            Gelauto.each_absolute_path.each do |path|
               Gelauto.annotate_file(path)
               Gelauto::Logger.info("Annotated #{path}")
             end

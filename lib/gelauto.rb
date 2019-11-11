@@ -1,5 +1,8 @@
 require 'logger'
 require 'parser/current'
+require 'gelauto/method_index'
+require 'gelauto/utils'
+require 'gelauto/rbi'
 
 module Gelauto
   autoload :ArgList,     'gelauto/arg_list'
@@ -9,14 +12,10 @@ module Gelauto
   autoload :GenericType, 'gelauto/generic_type'
   autoload :HashType,    'gelauto/hash_type'
   autoload :Logger,      'gelauto/logger'
-  autoload :MethodDef,   'gelauto/method_def'
-  autoload :MethodIndex, 'gelauto/method_index'
   autoload :Namespace,   'gelauto/namespace'
   autoload :NullLogger,  'gelauto/null_logger'
-  autoload :Rbi,         'gelauto/rbi'
   autoload :Type,        'gelauto/type'
   autoload :TypeSet,     'gelauto/type_set'
-  autoload :Utils,       'gelauto/utils'
   autoload :Var,         'gelauto/var'
 
   class << self
@@ -47,8 +46,8 @@ module Gelauto
       @paths ||= []
     end
 
-    def each_absolute_path(&block)
-      Utils.each_absolute_path(paths, &block)
+    def each_absolute_path
+      Utils.each_absolute_path(paths)
     end
 
     def register_type(type, handler)
@@ -85,7 +84,7 @@ module Gelauto
     end
 
     def index_methods
-      each_absolute_path.with_index do |path, idx|
+      each_absolute_path.each_with_index do |path, idx|
         begin
           method_index.index_methods_in(
             path, Parser::CurrentRuby.parse(File.read(path))
